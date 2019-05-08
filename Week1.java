@@ -5,7 +5,8 @@ public class Week1 {
     }
 
     public static Node reverseLinkedList(Node head) {
-        Node prev, next;
+        Node prev = null;
+        Node next = null;
         Node cur = head;
         while(cur != null) {
             next = cur.next;
@@ -18,24 +19,23 @@ public class Week1 {
 
     public static Node mergeLinkedLists(Node listA, Node listB) {
         Node head = new Node();
-        Node cur = head;
-        Node curA = listA;
-        Node curB = curB;
-        while(curA != null && curB != null) {
-            if(curA.data < curB.data) {
-                cur.next = curA;
-                curA = curA.next; 
+        mergeLinkedLists(head, listA, listB);
+        return head;
+    }
+
+    private static void mergeLinkedLists(Node merged, Node a, Node b) {
+        if(a == null) {
+            merged.next = b;
+        } else if(b == null) {
+            merged.next = a;
+        } else {
+            if(a.data < b.data) {
+                merged.next = a
+                mergeLinkedLists(merged, a.next, b);
             } else {
-                cur.next = curB;
-                curB = curB.next;
+                merged.next = b;
+                mergeLinkedLists(merged, a, b.next);
             }
         }
-        if(curA != null) {
-            cur.next = curA;
-        } else if(curB != null) {
-            cur.next = curB;
-        }
-        
-        return head.next;
     }
 }
