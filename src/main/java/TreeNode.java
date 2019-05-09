@@ -1,7 +1,7 @@
-class TreeNode {
+public class TreeNode {
     public TreeNode left;
     public TreeNode right;
-    
+
     /* PRE: Assuming that both TreeNode a and b are children of cur, on first call */
     public static TreeNode lowestCommonAncestor(TreeNode cur, TreeNode a, TreeNode b) {
         if(cur == a || cur == b) {
