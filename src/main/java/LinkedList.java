@@ -7,6 +7,13 @@ public class LinkedList {
 		tail = null;
 	}
 	
+	/* Constructor that creates list of size with nodes that represent their index */
+	public LinkedList(int size) {
+		for(int i = 0; i < size; i++) {
+			add(i);
+		}
+	}
+	
 	public void add(int number) {
 		addNode(new ListNode(number));
 	}
@@ -84,11 +91,6 @@ public class LinkedList {
 	private class ListNode {
 	    public ListNode next;
 	    public int data;
-	    
-	    public ListNode() {
-	    	this.next = null;
-	    	this.data = -1;
-	    }
 	    
 	    public ListNode(int data) {
 	        this.data = data;
