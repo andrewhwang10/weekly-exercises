@@ -4,9 +4,12 @@ public class TreeNode {
     public TreeNode parent;
     public int level;		//Level 0 is root
 
-    /* PRE: Assuming that both TreeNode a and b are in the same tree */
+    /* POST: Returns null if not in same tree */
     public static TreeNode lowestCommonAncestor(TreeNode a, TreeNode b) {
-    	while(a != b) {
+    	if(a == null || b == null) {
+    		throw new NullPointerException();
+    	}
+    	while(a != b && a != null && b != null) {
     		if(a.level <= b.level) {
     			a = a.parent;
     		}
@@ -14,6 +17,7 @@ public class TreeNode {
     			b = b.parent;
     		}
     	}
-    	return a;
+
+    	return (a == null || b == null) ? null : a;
     }
 }
