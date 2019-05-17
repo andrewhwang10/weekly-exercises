@@ -4,6 +4,20 @@ public class TreeNode {
     public TreeNode parent;
     public int level;		//Level 0 is root
 
+    public TreeNode() {
+    	left = null;
+    	right = null;
+    	parent = null;
+    	level = 0;
+    }
+    
+    public TreeNode(TreeNode parent, int level) {
+    	left = null;
+    	right = null;
+    	this.parent = parent;
+    	this.level = level;
+    }
+    
     /* POST: Returns null if not in same tree */
     public static TreeNode lowestCommonAncestor(TreeNode a, TreeNode b) {
     	if(a == null || b == null) {
