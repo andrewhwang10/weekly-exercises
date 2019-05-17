@@ -53,17 +53,17 @@ public class LinkedList {
 	}
 	public void reverse() {
 		tail = head;
-        ListNode prev = null;
-        ListNode next = null;
-        ListNode cur = head;
-        while(cur != null) {
-            next = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = next;
-        }
-        head = prev;
-    }
+		ListNode prev = null;
+		ListNode next = null;
+		ListNode cur = head;
+		while(cur != null) {
+		    next = cur.next;
+		    cur.next = prev;
+		    prev = cur;
+		    cur = next;
+		}
+		head = prev;
+	}
 	
 	public static LinkedList mergeLinkedLists(LinkedList listA, LinkedList listB) {
         LinkedList merged = new LinkedList();

@@ -10,10 +10,10 @@ public class TreeNode {
     		throw new NullPointerException();
     	}
     	while(a != b && a != null && b != null) {
-    		if(a.level <= b.level) {
+    		if(a.level >= b.level) {
     			a = a.parent;
     		}
-    		if(a.level >= b.level) {
+    		if(a.level <= b.level) {
     			b = b.parent;
     		}
     	}
