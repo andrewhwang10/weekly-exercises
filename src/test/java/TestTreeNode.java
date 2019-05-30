@@ -1,44 +1,51 @@
 import static org.junit.Assert.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestTreeNode {
 	
-	protected TreeNode a, b, c, d, root, root2;
-	/* Diagram:
-	 * 							  Level
-	 *		root		root2   |   0 
-	 *		 /\			  \		|	
-	 *		a  d		   b	|	1
-	 * 	   /					|
-	 *    c						|	2		*/
+	private TreeNode root; 
 	
-	protected void setUp() {
+	@BeforeEach
+	private void setup() {
 		root = new TreeNode();
-		a = new TreeNode(root, 1);
-		root.left = a;
-		c = new TreeNode(a, 2);
-		a.left = c;
-		
-		TreeNode root2 = new TreeNode();
-		TreeNode b = new TreeNode(root2, 1);
-		root2.right = b;
-		TreeNode d = new TreeNode(root, 1);
-		root.right = d;
-    }
+	}
 	
 	@Test
-	public void testLowestCommonAncestor() {
-		//Test Case 1: Not in same tree
-		assertNull(TreeNode.lowestCommonAncestor(a, b));
+	public void testTreeNodesInSeperateTrees() {
+		TreeNode child = new TreeNode(root, 1);
+		root.left = child;
 		
-		//Test Case 2: C is child of A
-		assertEquals(TreeNode.lowestCommonAncestor(a, c), a);
+		TreeNode otherRoot = new TreeNode();
+		TreeNode otherChild = new TreeNode(otherRoot, 1);
+		otherRoot.right = otherChild;
 		
-		//Test Case 3: Direct descendants of root
-		assertEquals(TreeNode.lowestCommonAncestor(a, d), root);
-		
-		// Test case 4: Different levels
-		assertEquals(TreeNode.lowestCommonAncestor(b, c), root);
+		assertNull(TreeNode.lowestCommonAncestor(child, otherChild));
 	}
+	
+	@Test
+	public void testDirectChildrenNodesOfRoot() {
+		root.left = new TreeNode(root, 1);
+		root.right = new TreeNode(root, 1);
+		
+		assertEquals(TreeNode.lowestCommonAncestor(root.left, root.right), root);
+	}
+	
+	@Test
+	public void testTreeWithLongLeft() {
+		root.left = new TreeNode(root, 1);
+		root.left.left = new TreeNode(root.left, 2);
+		
+		assertEquals(TreeNode.lowestCommonAncestor(root.left.left, root.left), root.left);
+	}
+	
+	@Test
+	public void testTreeNodesOnDifferentLevels() {
+		root.left = new TreeNode(root, 1);
+		root.right = new TreeNode(root, 1);
+		root.right.right = new TreeNode(root.right, 2);
+		
+		assertEquals(TreeNode.lowestCommonAncestor(root.left, root.right), root);
+	}	
 }
