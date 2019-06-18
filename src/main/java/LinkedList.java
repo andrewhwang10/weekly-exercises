@@ -22,8 +22,19 @@ public class LinkedList {
 			tail = node;
 			return;
 		}
+		node = findLastNode(node);
 		tail.next = node;
-		tail = tail.next;
+		tail = node;
+	}
+	
+	private ListNode findLastNode(ListNode node) {
+		if(node == null) {
+			return null;
+		}
+		while(node.next != null) {
+			node = node.next;
+		}
+		return node;
 	}
 	
 	public ListNode remove() {
