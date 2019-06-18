@@ -3,10 +3,12 @@ import java.util.*;
 public class LinkedList {
 	private ListNode head;
 	private ListNode tail; //For the purpose of adding in O(1) time
+	private int size;
 	
 	public LinkedList() {
 		head = null;
 		tail = null;
+		size = 0;
 	}
 	
 	/* Constructor that creates list of size with nodes that represent their index */
@@ -17,6 +19,7 @@ public class LinkedList {
 	}
 	
 	public void add(ListNode node) {
+		size++;
 		if(head == null && tail == null) { //Empty LinkedList case
 			head = node;
 			tail = node;
@@ -25,6 +28,10 @@ public class LinkedList {
 		node = findLastNode(node);
 		tail.next = node;
 		tail = node;
+	}
+	
+	public int size() {
+		return size;
 	}
 	
 	private ListNode findLastNode(ListNode node) {
@@ -41,6 +48,7 @@ public class LinkedList {
 		if(head == null) {
 			return null;
 		}
+		size--;
 		ListNode temp = head;
 		head = head.next;
 		temp.next = null;
@@ -73,18 +81,31 @@ public class LinkedList {
 	}
 	
 	public static boolean isCyclical(LinkedList listA) {
-		Set<ListNode> visited = new HashSet<>();
 		ListNode cur = listA.head;
+		int iters = 0;
 		while(cur != null) {
-			if(visited.contains(cur)) {
+			iters++;
+			if(iters > listA.size) {
 				return true;
 			}
-			visited.add(cur);
 			cur = cur.next;
 		}
-		
 		return false;
 	}
+	
+//	public static boolean isCyclical(LinkedList listA) {
+//		Set<ListNode> visited = new HashSet<>();
+//		ListNode cur = listA.head;
+//		while(cur != null) {
+//			if(visited.contains(cur)) {
+//				return true;
+//			}
+//			visited.add(cur);
+//			cur = cur.next;
+//		}
+//		
+//		return false;
+//	}
 	
 	public static LinkedList mergeLinkedLists(LinkedList listA, LinkedList listB) {
         LinkedList merged = new LinkedList();
