@@ -39,7 +39,7 @@ public class LinkedList {
 	
 	public ListNode remove() {
 		if(head == null) {
-			throw new NullPointerException();
+			return null;
 		}
 		ListNode temp = head;
 		head = head.next;
