@@ -26,7 +26,7 @@ public class LinkedList {
 		tail = tail.next;
 	}
 	
-	public ListNode pop() {
+	public ListNode remove() {
 		if(head == null) {
 			throw new NullPointerException();
 		}
@@ -36,7 +36,7 @@ public class LinkedList {
 		return temp;
 	}
 	
-	public ListNode peek() {
+	public ListNode first() {
 		if(head == null) {
 			throw new NullPointerException();
 		}
@@ -91,10 +91,10 @@ public class LinkedList {
     }
 	
 	private static ListNode smallerFirstElement(LinkedList listA, LinkedList listB) {
-		if(listA.peek().data < listB.peek().data) {
-			return listA.pop();
+		if(listA.first().data < listB.first().data) {
+			return listA.remove();
 		} else {
-			return listB.pop();
+			return listB.remove();
 		}
 	}
 	

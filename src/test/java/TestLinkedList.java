@@ -24,7 +24,7 @@ public class TestLinkedList {
     	
     	assertTrue(LinkedList.isCyclical(list));
     	
-    	list.pop();
+    	list.remove();
     	
     	assertFalse(LinkedList.isCyclical(list));
     }
@@ -42,7 +42,7 @@ public class TestLinkedList {
     	
         list.reverse();
         while(!list.isEmpty()) {
-        	assertEquals(list.pop().data, reversedList.pop().data);
+        	assertEquals(list.remove().data, reversedList.remove().data);
         }
         assertTrue(reversedList.isEmpty());        
     }
@@ -69,7 +69,7 @@ public class TestLinkedList {
         LinkedList result = LinkedList.mergeLinkedLists(list, listB);
        
         while(!result.isEmpty()) {
-        	assertEquals(result.pop().data, expected.pop().data);
+        	assertEquals(result.remove().data, expected.remove().data);
         }        
         assertTrue(expected.isEmpty());
     }
