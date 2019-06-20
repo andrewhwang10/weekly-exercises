@@ -1,40 +1,76 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestLinkedList {
     
-    protected LinkedList list, reversedList;
+    private LinkedList list;
 
-    protected void setUp() {
+    @BeforeEach
+    private void setup() {
         list = new LinkedList();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-        reversedList = new LinkedList();
-        reversedList.add(3);
-        reversedList.add(2);
-        reversedList.add(1);
     }
-
+    
+    @Test
+    public void testForCycles() {
+    	ListNode one = new ListNode(1);
+    	ListNode two = new ListNode(2);
+    	ListNode three = new ListNode(3);
+    	list.add(one);
+    	list.add(two);
+    	list.add(three);
+    	list.add(one);
+    	
+    	assertTrue(LinkedList.isCyclical(list));
+    	
+    	list.remove();
+    	
+    	assertFalse(LinkedList.isCyclical(list));
+    }
+    
     @Test
     public void testReverseLinkedList() {
+    	list.add(new ListNode(1));
+    	list.add(new ListNode(2));
+    	list.add(new ListNode(3));
+    	
+    	LinkedList reversedList = new LinkedList();
+    	reversedList.add(new ListNode(3));
+    	reversedList.add(new ListNode(2));
+    	reversedList.add(new ListNode(1));
+    	
         list.reverse();
-        assertEquals(list, reversedList);
+        while(!list.isEmpty()) {
+        	assertEquals(list.remove().data, reversedList.remove().data);
+        }
+        assertTrue(reversedList.isEmpty());        
     }
 
     @Test
     public void testMergeLinkedLists() {
-        LinkedList listA = new LinkedList(3);
+    	ListNode one = new ListNode(1);
+    	ListNode three = new ListNode(3);
+    	ListNode five = new ListNode(5);
+    	list.add(one);
+    	list.add(three);
+    	list.add(five);
+  
         LinkedList listB = new LinkedList(3);
+                
         LinkedList expected = new LinkedList();
-        for(int i = 0; i < 3; i++) {
-        	expected.add(i);
-        	expected.add(i);
-        }
+        expected.add(new ListNode(0));
+        expected.add(new ListNode(1));
+        expected.add(new ListNode(1));
+        expected.add(new ListNode(2));
+        expected.add(new ListNode(3));
+        expected.add(new ListNode(5));
         
-        LinkedList result = LinkedList.mergeLinkedLists(listA, listB);
-        assertEquals(result, expected);
-        
+        LinkedList result = LinkedList.mergeLinkedLists(list, listB);
+       
+        while(!result.isEmpty()) {
+        	assertEquals(result.remove().data, expected.remove().data);
+        }        
+        assertTrue(expected.isEmpty());
     }
 }

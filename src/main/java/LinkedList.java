@@ -1,56 +1,71 @@
+import java.util.*;
+
 public class LinkedList {
 	private ListNode head;
 	private ListNode tail; //For the purpose of adding in O(1) time
+	private int size;
 	
 	public LinkedList() {
 		head = null;
 		tail = null;
+		size = 0;
 	}
 	
 	/* Constructor that creates list of size with nodes that represent their index */
 	public LinkedList(int size) {
 		for(int i = 0; i < size; i++) {
-			add(i);
+			add(new ListNode(i));
 		}
 	}
 	
-	public void add(int number) {
-		addNode(new ListNode(number));
-	}
-	
-	private void addNode(ListNode node) {
+	public void add(ListNode node) {
+		size++;
 		if(head == null && tail == null) { //Empty LinkedList case
 			head = node;
-			tail = head;
+			tail = node;
 			return;
 		}
+		node = findLastNode(node);
 		tail.next = node;
-		tail = tail.next;
+		tail = node;
 	}
 	
-	public int pop() {
-		return popNode().data;		
+	public int size() {
+		return size;
 	}
 	
-	private ListNode popNode() {
-		if(head == null) {
-			throw new NullPointerException();
+	private ListNode findLastNode(ListNode node) {
+		if(node == null) {
+			return null;
 		}
+		while(node.next != null) {
+			node = node.next;
+		}
+		return node;
+	}
+	
+	public ListNode remove() {
+		if(head == null) {
+			return null;
+		}
+		size--;
 		ListNode temp = head;
 		head = head.next;
+		temp.next = null;
 		return temp;
 	}
 	
-	public int peek() {
+	public ListNode first() {
 		if(head == null) {
 			throw new NullPointerException();
 		}
-		return this.head.data;
+		return this.head;
 	}
 	
 	public boolean isEmpty() {
 		return head == null;
 	}
+	
 	public void reverse() {
 		tail = head;
 		ListNode prev = null;
@@ -65,36 +80,55 @@ public class LinkedList {
 		head = prev;
 	}
 	
+	public static boolean isCyclical(LinkedList listA) {
+		ListNode cur = listA.head;
+		int iters = 0;
+		while(cur != null) {
+			iters++;
+			if(iters > listA.size) {
+				return true;
+			}
+			cur = cur.next;
+		}
+		return false;
+	}
+	
+//	public static boolean isCyclical(LinkedList listA) {
+//		Set<ListNode> visited = new HashSet<>();
+//		ListNode cur = listA.head;
+//		while(cur != null) {
+//			if(visited.contains(cur)) {
+//				return true;
+//			}
+//			visited.add(cur);
+//			cur = cur.next;
+//		}
+//		
+//		return false;
+//	}
+	
 	public static LinkedList mergeLinkedLists(LinkedList listA, LinkedList listB) {
         LinkedList merged = new LinkedList();
         while(!listA.isEmpty() && !listB.isEmpty()) {
         	ListNode toAdd = smallerFirstElement(listA, listB);
-        	merged.addNode(toAdd);
+        	merged.add(toAdd);
         }
         if(!listA.isEmpty()) {
-        	merged.addNode(listA.head);
+        	merged.add(listA.head);
         } else if(!listB.isEmpty()) {
-        	merged.addNode(listB.head);
+        	merged.add(listB.head);
         }
         
         return merged;
     }
 	
 	private static ListNode smallerFirstElement(LinkedList listA, LinkedList listB) {
-		if(listA.peek() < listB.peek()) {
-			return listA.popNode();
+		if(listA.first().data < listB.first().data) {
+			return listA.remove();
 		} else {
-			return listB.popNode();
+			return listB.remove();
 		}
 	}
 	
-	private class ListNode {
-	    public ListNode next;
-	    public int data;
-	    
-	    public ListNode(int data) {
-	        this.data = data;
-	    }
-	}
 }
 
