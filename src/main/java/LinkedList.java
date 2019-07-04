@@ -25,8 +25,10 @@ public class LinkedList {
 			tail = node;
 			return;
 		}
-		node = findLastNode(node);
 		tail.next = node;
+		if(!isCyclical(this)) {
+			node = findLastNode(node);
+		}		
 		tail = node;
 	}
 	
@@ -79,19 +81,42 @@ public class LinkedList {
 		}
 		head = prev;
 	}
-	
+
 	public static boolean isCyclical(LinkedList listA) {
-		ListNode cur = listA.head;
-		int iters = 0;
-		while(cur != null) {
-			iters++;
-			if(iters > listA.size) {
+		ListNode slowPoint = listA.head;
+		ListNode fastPoint = slowPoint.next;
+		while(fastPoint != null) {
+			if(slowPoint == fastPoint) {
 				return true;
+			} else {
+				fastPoint = getNodeAfterN(fastPoint, 2);
+				slowPoint = slowPoint.next;
 			}
-			cur = cur.next;
 		}
 		return false;
 	}
+	
+	private static ListNode getNodeAfterN(ListNode node, int n) {
+		int i = 0;
+		while(i < n && node != null) {
+			node = node.next;
+			i++;
+		}
+		return node;
+	}
+	
+//	public static boolean isCyclical(LinkedList listA) {
+//		ListNode cur = listA.head;
+//		int iters = 0;
+//		while(cur != null) {
+//			iters++;
+//			if(iters > listA.size) {
+//				return true;
+//			}
+//			cur = cur.next;
+//		}
+//		return false;
+//	}
 	
 //	public static boolean isCyclical(LinkedList listA) {
 //		Set<ListNode> visited = new HashSet<>();
